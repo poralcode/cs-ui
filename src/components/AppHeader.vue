@@ -2,7 +2,9 @@
   <header class="app-header" :class="{ 'shadow-md': isScrolling }">
     <!-- Logo -->
     <div class="app-header-left-container">
-      <img :src="logo" alt="Logo" />
+      <router-link to="/">
+        <img :src="logo" alt="Logo" />
+      </router-link>
     </div>
 
     <!-- Search Bar -->
