@@ -2,8 +2,8 @@
 
 This readme should help you get started on the API request.
 
-## POST_SIGNIN
-
+<details>
+<summary>POST_SIGNIN</summary>
 This constant stores the URL used for making POST requests to authenticate users during the sign-in process.
 
 When signing in successfully, the following JSON data is the expected result.
@@ -35,8 +35,9 @@ When signing in failed, the following JSON data is the expected result.
 
 ```
 
-## POST_REGISTRATION
-
+</details>
+<details>
+<summary>POST_REGISTRATION</summary>
 This constant stores the URL used for making POST requests to register a user account.
 
 When registration is successfully, the following JSON data is the expected result. The expected result is similar when signing in.
@@ -67,3 +68,5 @@ When registration is failed, the following JSON data is the expected result. The
 }
 
 ```
+
+</details>
