@@ -1,8 +1,5 @@
 import axios from "axios";
 
-// TEST URL FAILED: https://b6ca97a70efe42f898646035910c5ca4.api.mockbin.io/
-// TEST URL SUCCESS: https://c861af947d0340e7af544477a9719f6c.api.mockbin.io/
-
 /* POST REQUEST API URL */
 const POST_SIGNIN = "https://c861af947d0340e7af544477a9719f6c.api.mockbin.io/";
 const POST_REGISTRATION =
