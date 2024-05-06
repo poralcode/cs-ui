@@ -12,12 +12,14 @@ import RegistrationPage from "@/views/RegistrationPage.vue";
 import HomePageStudent from "@/views/HomePageStudent.vue";
 import HomePageFaculty from "@/views/HomePageFaculty.vue";
 import NotFoundPage from "@/views/NotFoundPage.vue";
+import PaperPage from "@/views/PaperPage.vue";
 
 const routes = [
   { path: "/", name: "home", component: LandingPage },
   { path: "/landing", name: "landing", component: LandingPage },
   { path: "/signin", name: "signin", component: SigninPage },
   { path: "/register", name: "register", component: RegistrationPage },
+  { path: "/paper", name: "paper", component: PaperPage },
   { path: "/student", name: "student", component: HomePageStudent },
   { path: "/faculty", name: "faculty", component: HomePageFaculty },
   { path: "/404", name: "404", component: NotFoundPage },

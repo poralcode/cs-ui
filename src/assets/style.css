@@ -142,20 +142,35 @@ div.input-container-inner > span.right-icon {
 .main-content {
   @apply flex-grow;
 }
-.headline {
+.headline,
+.headline-2,
+.headline-3 {
   color: var(--black);
   font-size: xxx-large;
+}
+.headline-2 {
+  font-size: xx-large;
+  @apply font-bold;
+}
+.headline-3 {
+  font-size: large;
+  @apply font-medium;
 }
 .sub-headline,
 .sub-headline-2,
 .sub-headline-3,
+.sub-headline-4,
 button.btn-icon-lg {
   color: var(--gray-2);
   font-size: x-large;
   @apply mt-2;
 }
-.sub-headline-2 {
+.sub-headline-2,
+.sub-headline-4 {
   @apply text-lg m-0;
+}
+.sub-headline-4 {
+  @apply text-base font-medium;
 }
 .sub-headline-3 {
   color: var(--black);
@@ -166,6 +181,7 @@ button.btn-icon-lg {
 }
 .card-view,
 button.btn-card {
+  cursor: pointer;
   @apply flex flex-col w-56 h-80 bg-white rounded-xl shadow-md border-2 border-gray-200 p-4 justify-between;
 }
 .card-main-content {

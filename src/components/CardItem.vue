@@ -1,5 +1,5 @@
 <template>
-  <div class="card-view">
+  <div class="card-view" @click="navigateToPaper">
     <div class="card-main-content">
       <img :src="paper['image-url']" alt="Image" />
       <div class="mt-4">
@@ -54,7 +54,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 library.add(fas);
 
 export default {
-  name: "app-header",
+  name: "cart-item",
   props: ["paper", "showStatus", "publicView"],
   components: {
     FontAwesomeIcon,
@@ -87,6 +87,12 @@ export default {
     },
   },
   methods: {
+    navigateToPaper() {
+      this.$router.push({
+        path: "/paper",
+        query: { paper: this.paper },
+      });
+    },
     formatDate(date) {
       const options = { year: "numeric", month: "long", day: "numeric" };
       return new Date(date).toLocaleDateString(undefined, options);

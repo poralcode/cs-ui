@@ -87,7 +87,6 @@ export default {
       this.isGettingPapers = true;
       try {
         const response = await this.$api.getPapers(3, "default", "approved");
-        console.log(response.data);
         if (response.data["is-success"])
           this.userPapers = response.data["user-papers"];
         else this.errorMessage = response.data.message;
