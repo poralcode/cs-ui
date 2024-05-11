@@ -88,9 +88,10 @@ export default {
   },
   methods: {
     navigateToPaper() {
+      this.$store.commit("addPaper", this.paper);
       this.$router.push({
         path: "/paper",
-        query: { paper: this.paper },
+        query: { paper_id: this.paper.id },
       });
     },
     formatDate(date) {

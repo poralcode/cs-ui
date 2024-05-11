@@ -13,6 +13,7 @@ import HomePageStudent from "@/views/HomePageStudent.vue";
 import HomePageFaculty from "@/views/HomePageFaculty.vue";
 import NotFoundPage from "@/views/NotFoundPage.vue";
 import PaperPage from "@/views/PaperPage.vue";
+import BrowsePage from "@/views/BrowsePage.vue";
 
 const routes = [
   { path: "/", name: "home", component: LandingPage },
@@ -20,6 +21,7 @@ const routes = [
   { path: "/signin", name: "signin", component: SigninPage },
   { path: "/register", name: "register", component: RegistrationPage },
   { path: "/paper", name: "paper", component: PaperPage },
+  { path: "/browse", name: "browse", component: BrowsePage },
   { path: "/student", name: "student", component: HomePageStudent },
   { path: "/faculty", name: "faculty", component: HomePageFaculty },
   { path: "/404", name: "404", component: NotFoundPage },
@@ -44,8 +46,13 @@ router.beforeEach((to, from, next) => {
   } else if (!isLoggedIn && (to.name === "student" || to.name === "faculty")) {
     // If the user tries to access student or faculty page but is not logged in, redirect to sign in page
     next("/signin");
-  } else if (isLoggedIn && to.name !== userType) {
-    // If the user tries to access a page that does not match their user type, redirect to their home page
+  } else if (
+    isLoggedIn &&
+    to.name !== userType &&
+    to.name !== "browse" &&
+    to.name !== "paper"
+  ) {
+    // If the user tries to access a page that does not match their user type and is not the browse page, redirect to their home page
     next(`/${userType}`);
   } else {
     next();

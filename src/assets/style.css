@@ -120,16 +120,16 @@ div.input-container-inner > span.right-icon {
   border: solid 1px var(--border-gray);
 }
 .app-header {
-  @apply flex justify-between items-center p-4 bg-white sticky top-0 w-full z-50;
+  @apply flex justify-center items-center p-4 bg-white sticky top-0 w-full z-50;
 }
-.app-header-left-container img {
-  @apply w-auto;
+.app-header-left-container {
+  @apply w-3/12 flex items-center;
 }
 .app-header-middle-container {
-  @apply w-3/5 px-4 flex items-center justify-center flex-grow;
+  @apply flex w-full justify-end mr-6;
 }
 .app-header-right-container {
-  @apply w-1/5 flex justify-end space-x-5;
+  @apply flex justify-end items-center space-x-5;
 }
 .app-footer {
   border-top: solid 1px var(--border-gray);
@@ -165,6 +165,7 @@ button.btn-icon-lg {
   font-size: x-large;
   @apply mt-2;
 }
+
 .sub-headline-2,
 .sub-headline-4 {
   @apply text-lg m-0;
@@ -174,6 +175,9 @@ button.btn-icon-lg {
 }
 .sub-headline-3 {
   color: var(--black);
+}
+.sub-headline-5 {
+  @apply text-sm font-semibold text-gray-400;
 }
 button.btn-icon-lg {
   color: var(--blue);
@@ -216,4 +220,7 @@ button.btn-card {
 
 div.full-width {
   @apply max-w-full w-full;
+}
+.filter-heading {
+  @apply text-sm font-medium;
 }
