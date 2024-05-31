@@ -167,6 +167,8 @@ export default {
       search: "",
       userPapers: null,
       paper: null,
+      filter: null,
+      searchQueryFromRoute: this.$route.query.q || "",
     };
   },
   mounted() {
@@ -176,7 +178,9 @@ export default {
     async getPapers() {
       this.isGettingPapers = true;
       try {
-        const response = await this.$api.getUserPapers(3);
+        const response = this.searchQueryFromRoute
+          ? await this.$api.searchPaper(this.searchQueryFromRoute, this.filter)
+          : await this.$api.getPapers(50, null, "approved");
         if (response.data["is-success"])
           this.userPapers = response.data["user-papers"];
         else this.errorMessage = response.data.message;

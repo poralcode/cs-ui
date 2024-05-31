@@ -2,7 +2,7 @@ import { createStore } from "vuex";
 
 export default createStore({
   state: {
-    userProfile: null,
+    userProfile: null /* This will hold the user's profile. */,
     papers:
       {} /* This will hold all paper objects, keyed by their IDs. This is used when clicking the CardItem or the Research Paper.*/,
   },

@@ -1,10 +1,5 @@
 <template>
   <div class="w-full flex flex-col items-center">
-    <div class="w-full flex justify-end">
-      <div class="w-56 h-28 object-cover rounded overflow-hidden border">
-        <pdf-thumbnail :pdf="pdf" />
-      </div>
-    </div>
     <div class="mb-3" v-if="errorMessage">
       <p class="notice-error mr-3">
         <font-awesome-icon
@@ -87,7 +82,7 @@
     </div>
 
     <div class="flex w-full justify-end mt-5 mb-9">
-      <button class="btn-normal" @click="upload" :disabled="isLoading">
+      <button class="btn-normal" @click="save" :disabled="isLoading">
         <p v-if="isLoading">Saving...</p>
         <p v-else>Save</p>
         <font-awesome-icon
@@ -105,43 +100,40 @@ import dataMixins from "@/mixins/DataMixins.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import PdfThumbnail from "@/components/PdfThumbnail.vue";
 
 library.add(fas);
 
 export default {
-  name: "UploadForm",
-  props: ["pdf"],
+  name: "EditForm",
+  props: ["paperid", "pTitle", "pAbstract", "pAuthors", "pKeywords"],
   mixins: [dataMixins],
   components: {
     FontAwesomeIcon,
-    PdfThumbnail,
   },
   data() {
     return {
-      title: "",
-      abstract: "",
-      authors: "",
-      keywords: "",
+      title: this.pTitle,
+      abstract: this.pAbstract,
+      authors: this.pAuthors,
+      keywords: this.pKeywords,
       errorMessage: "",
       isLoading: false,
     };
   },
   methods: {
-    async upload() {
+    async save() {
       this.errorMessage = "";
       this.isLoading = true;
       try {
-        const response = await this.$api.uploadPaper(
-          this.userProfile["id"],
+        const response = await this.$api.updatePaper(
+          this.paperid,
           this.title,
           this.abstract,
           this.authors,
-          this.keywords,
-          this.pdf
+          this.keywords
         );
         if (response.data["is-success"]) {
-          this.$emit("upload-success", response.data);
+          this.$emit("edit-success", response.data["user-paper"]);
         } else this.errorMessage = response.data.message;
       } catch (error) {
         this.errorMessage = "Failed, please try again.";

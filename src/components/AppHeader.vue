@@ -21,7 +21,12 @@
           <span>
             <font-awesome-icon :icon="['fas', 'search']" class="input-icon" />
           </span>
-          <input type="text" placeholder="Search topics or authors" />
+          <input
+            type="text"
+            v-model="searchQuery"
+            placeholder="Search topics or authors"
+            @keyup.enter="performSearch"
+          />
         </div>
       </div>
 
@@ -91,11 +96,20 @@ export default {
     return {
       logo,
       isScrolling: false,
+      searchQuery: "",
     };
   },
   methods: {
     scroll() {
       this.isScrolling = window.scrollY > 0;
+    },
+    performSearch() {
+      if (this.searchQuery.trim()) {
+        this.$router.push({
+          path: "/browse",
+          query: { q: this.searchQuery },
+        });
+      }
     },
   },
   mounted() {

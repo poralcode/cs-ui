@@ -160,7 +160,7 @@ export default {
     },
   },
   mounted() {
-    this.getUserPapers();
+    this.getStudentPapers();
   },
   methods: {
     uploadFile() {
@@ -182,11 +182,13 @@ export default {
     dismissErrorMessage() {
       this.errorMessage = "";
     },
-    async getUserPapers() {
+    async getStudentPapers() {
       this.isGettingPapers = true;
       this.dismissErrorMessage();
       try {
-        const response = await this.$api.getUserPapers(this.userProfile["id"]);
+        const response = await this.$api.getStudentPapers(
+          this.userProfile["id"]
+        );
         if (response.data["is-success"])
           this.userPapers = response.data["user-papers"];
         else this.errorMessage = response.data.message;

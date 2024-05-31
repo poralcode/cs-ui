@@ -1,7 +1,35 @@
 <template>
   <div class="flex flex-col min-h-screen">
     <app-header />
-    <div class="main-content bg-slate-50 flex flex-col items-center">
+    <div
+      v-if="showEditForm"
+      class="main-content bg-slate-50 flex flex-col items-center"
+    >
+      <div class="w-8/12 flex justify-between max-w-7xl p-5 mt-8">
+        <button class="btn-icon-lg" @click="showEditForm = false">
+          <font-awesome-icon
+            :icon="['fas', 'arrow-left']"
+            class="input-icon-2 mr-4"
+            size="1x"
+          />Cancel Edit
+        </button>
+      </div>
+      <div class="w-8/12 flex justify-between max-w-7xl p-5">
+        <edit-form
+          :paperid="paper.id"
+          :pTitle="paper.title"
+          :pAbstract="paper.abstract"
+          :pAuthors="authors"
+          :pKeywords="keywords"
+          @edit-success="handleEditSuccess"
+        />
+      </div>
+    </div>
+
+    <div
+      v-if="!showEditForm"
+      class="main-content bg-slate-50 flex flex-col items-center"
+    >
       <!-- Align this in top -->
       <div class="w-9/12 flex justify-between max-w-7xl p-5 mt-8 space-x-6">
         <div class="w-full border rounded-lg bg-white p-5 flex flex-col">
@@ -51,7 +79,32 @@
 
         <div class="w-5/12 border rounded-lg bg-white p-5">
           <!-- 30% width -->
-          <p class="headline-3">Citation</p>
+          <div class="flex items-center justify-between">
+            <p class="headline-3">Citation</p>
+            <font-awesome-icon
+              v-if="isDeletingPaper"
+              :icon="['fas', 'spinner']"
+              class="spinner text-blue-700"
+              size="2x"
+            />
+            <div
+              v-if="isLoggedIn && !isDeletingPaper"
+              class="flex items-center justify-between space-x-2"
+            >
+              <button class="btn-icon" @click="showEditForm = true">
+                <font-awesome-icon
+                  :icon="['fas', 'pen']"
+                  class="text-blue-500 mr-2"
+                /><span class="text-blue-500 font-semibold">Edit</span>
+              </button>
+              <button class="btn-icon" @click="deletePaper">
+                <font-awesome-icon
+                  :icon="['fas', 'trash']"
+                  class="text-red-500 mr-2"
+                /><span class="text-red-500 font-semibold">Delete</span>
+              </button>
+            </div>
+          </div>
           <p class="font-semibold mt-3 text-sm text-gray-400">Title</p>
           <p class="text-sm">{{ paper.title }}</p>
           <p class="font-semibold mt-2 text-sm text-gray-400">
@@ -65,8 +118,8 @@
             {{ paper.abstract }}
           </p>
           <p class="font-semibold mt-2 text-sm text-gray-400">Keywords</p>
-          <p class="text-base">
-            {{ paper.Keywords }}
+          <p class="text-sm">
+            {{ keywords }}
           </p>
         </div>
       </div>
@@ -80,25 +133,29 @@
 </template>
 
 <script>
+import dataMixins from "@/mixins/DataMixins.js";
 import appHeader from "@/components/AppHeader.vue";
 import appFooter from "@/components/AppFooter.vue";
 import cardItem from "@/components/CardItem.vue";
+import editForm from "@/components/EditForm.vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas } from "@fortawesome/free-solid-svg-icons";
+import { faL, fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(fas);
 
 export default {
   name: "paper",
+  mixins: [dataMixins],
   components: {
     appHeader,
     appFooter,
     cardItem,
+    editForm,
     FontAwesomeIcon,
   },
   data() {
-    return {};
+    return { isDeletingPaper: false, errorMessage: "", showEditForm: false };
   },
   computed: {
     paper() {
@@ -107,6 +164,10 @@ export default {
     authors() {
       const allAuthors = this.paper.authors.map((author) => author.name);
       return `${allAuthors.join(", ")}`;
+    },
+    keywords() {
+      const allKeywords = this.paper.keywords.map((keyword) => keyword.name);
+      return `${allKeywords.join(", ")}`;
     },
     authorString() {
       return this.paper.authors.length > 1 ? "Authors" : "Author";
@@ -125,6 +186,24 @@ export default {
         return (num / 1000).toFixed(1) + "k";
       } else {
         return num;
+      }
+    },
+    handleEditSuccess(data) {
+      this.paper = data;
+      this.showEditForm = false;
+    },
+    async deletePaper() {
+      this.isDeletingPaper = true;
+      try {
+        const response = await this.$api.deletePaper(this.paper.id);
+        if (response.data["is-success"])
+          this.$router.push({ path: "/student" });
+        else this.errorMessage = response.data.message;
+      } catch (error) {
+        this.errorMessage = "Unable to delete this paper.";
+        console.error(error);
+      } finally {
+        this.isDeletingPaper = false;
       }
     },
   },
