@@ -179,8 +179,12 @@ export default {
       this.isGettingPapers = true;
       try {
         const response = this.searchQueryFromRoute
-          ? await this.$api.searchPaper(this.searchQueryFromRoute, this.filter)
-          : await this.$api.getPapers(50, null, "approved");
+          ? await this.$api.searchPaper(
+              this.searchQueryFromRoute,
+              "approved",
+              this.filter
+            )
+          : await this.$api.getPapers(50, "default", "approved");
         if (response.data["is-success"])
           this.userPapers = response.data["user-papers"];
         else this.errorMessage = response.data.message;

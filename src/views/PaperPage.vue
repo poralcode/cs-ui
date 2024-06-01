@@ -82,13 +82,30 @@
           <div class="flex items-center justify-between">
             <p class="headline-3">Citation</p>
             <font-awesome-icon
-              v-if="isDeletingPaper"
+              v-if="isDeletingPaper || isUpdatingStatus"
               :icon="['fas', 'spinner']"
               class="spinner text-blue-700"
               size="2x"
             />
             <div
-              v-if="isLoggedIn && !isDeletingPaper"
+              v-if="isLoggedIn && !isUpdatingStatus && userType === 'faculty'"
+              class="flex items-center justify-between space-x-2"
+            >
+              <button class="btn-icon" @click="updatPaperStatus('approved')">
+                <font-awesome-icon
+                  :icon="['fas', 'thumbs-up']"
+                  class="text-blue-500 mr-2"
+                /><span class="text-blue-500 font-semibold">Approve</span>
+              </button>
+              <button class="btn-icon" @click="updatPaperStatus('declined')">
+                <font-awesome-icon
+                  :icon="['fas', 'thumbs-down']"
+                  class="text-red-500 mr-2"
+                /><span class="text-red-500 font-semibold">Decline</span>
+              </button>
+            </div>
+            <div
+              v-if="isLoggedIn && !isDeletingPaper && userType === 'student'"
               class="flex items-center justify-between space-x-2"
             >
               <button class="btn-icon" @click="showEditForm = true">
@@ -155,7 +172,13 @@ export default {
     FontAwesomeIcon,
   },
   data() {
-    return { isDeletingPaper: false, errorMessage: "", showEditForm: false };
+    return {
+      isDeletingPaper: false,
+      isUpdatingStatus: false,
+      errorMessage: "",
+      showEditForm: false,
+      userType: this.$store.state.userProfile["user-type"],
+    };
   },
   computed: {
     paper() {
@@ -204,6 +227,23 @@ export default {
         console.error(error);
       } finally {
         this.isDeletingPaper = false;
+      }
+    },
+    async updatPaperStatus(status) {
+      this.isUpdatingStatus = true;
+      try {
+        const response = await this.$api.updatPaperStatus(
+          this.paper.id,
+          status
+        );
+        if (response.data["is-success"]) console.log("OK");
+        // this.$router.push({ path: "/student" });
+        else this.errorMessage = response.data.message;
+      } catch (error) {
+        this.errorMessage = "Unable to update the status of this paper.";
+        console.error(error);
+      } finally {
+        this.isUpdatingStatus = false;
       }
     },
   },

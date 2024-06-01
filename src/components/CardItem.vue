@@ -55,7 +55,7 @@ library.add(fas);
 
 export default {
   name: "cart-item",
-  props: ["paper", "showStatus", "publicView"],
+  props: ["paper", "showStatus", "publicView", "showAllAuthor"],
   components: {
     FontAwesomeIcon,
   },
@@ -66,24 +66,22 @@ export default {
   },
   computed: {
     authorString() {
+      const authors = this.paper?.authors?.map((author) => author.name) || [];
+      const authorWord = authors.length === 1 ? "Author" : "Authors";
       if (
-        !this.paper ||
-        !this.paper.authors ||
-        this.paper.authors.length === 0
+        !authors.length ||
+        (authors.length === 1 && !this.publicView && !this.showAllAuthor)
       ) {
         return "";
-      } else if (this.paper.authors.length === 1 && !this.publicView) {
-        return "";
-      } else {
-        const allAuthors = this.paper.authors.map((author) => author.name);
-        const authorWord = allAuthors.length === 1 ? "Author" : "Authors";
-        if (!this.publicView) {
-          const otherAuthors = allAuthors.slice(1).join(", ");
-          return `${authorWord} by you and ${otherAuthors}`;
-        } else {
-          return `${authorWord}: ${allAuthors.join(", ")}`;
-        }
       }
+      if (!this.publicView) {
+        return `${authorWord}: ${
+          this.showAllAuthor
+            ? authors.join(", ")
+            : `by you and ${authors.slice(1).join(", ")}`
+        }`;
+      }
+      return `${authorWord}: ${authors.join(", ")}`;
     },
   },
   methods: {
