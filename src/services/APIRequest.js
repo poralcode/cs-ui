@@ -1,11 +1,11 @@
 import axios from "axios";
 
 /* Use this endpoint to sign in the student or faculty member. This will return the user's profile. */
-const POST_SIGNIN = "https://7f0637a9f7694fb3a2633b43a3a8303d.api.mockbin.io/"; //For Student type: "https://c861af947d0340e7af544477a9719f6c.api.mockbin.io/";
+const POST_SIGNIN = "https://7f0637a9f7694fb3a2633b43a3a8303d.api.mockbin.io/"; //Mockup data for Student type: "https://c861af947d0340e7af544477a9719f6c.api.mockbin.io/";
 
 /* Use this endpoint to register a new student or faculty member. This will return the user's profile. */
 const POST_REGISTRATION =
-  "https://7f0637a9f7694fb3a2633b43a3a8303d.api.mockbin.io/"; ////For Student type: "https://c861af947d0340e7af544477a9719f6c.api.mockbin.io/";
+  "https://7f0637a9f7694fb3a2633b43a3a8303d.api.mockbin.io/"; //Mockup data for Student type: "https://c861af947d0340e7af544477a9719f6c.api.mockbin.io/";
 
 /* Use this endpoint to upload student papers. This will return the uploaded paper of student in JSON format. */
 const POST_UPLOAD_PAPER =
@@ -18,6 +18,10 @@ const POST_UPDATE_PAPER =
 /* Use this endpoint to delete a paper. */
 const POST_DELETE_PAPER =
   "https://33650924f37540f1aeaf447f32ac8b23.api.mockbin.io/";
+
+/* Use this endpoint to update the status of paper. */
+const POST_UPDATE_PAPER_STATUS =
+  "https://8fed41c6337147579aca8c5bee09fe07.api.mockbin.io/";
 
 /* Use this endpoint to fetch all papers of specific student. */
 const GET_STUDENT_PAPERS =
@@ -55,7 +59,7 @@ export default {
    */
   uploadPaper: (userid, title, abstract, authors, keywords, pdf) =>
     axios.post(`${POST_UPLOAD_PAPER}`, {
-      userid,
+      userid, //the user id in the database, not the ID Number.
       title,
       abstract,
       authors,
@@ -68,7 +72,7 @@ export default {
    */
   getStudentPapers: (userid) =>
     axios.get(`${GET_STUDENT_PAPERS}`, {
-      userid,
+      userid, //the user id in the database, not the ID Number.
     }),
 
   /* Use this function to fetch all papers depending on their status (Pending, Approved, or Declined).
@@ -76,17 +80,18 @@ export default {
    */
   getPapers: (quantity, sortby, status) =>
     axios.get(`${GET_PAPERS}`, {
-      quantity,
-      sortby,
-      status,
+      quantity, //if quantity is 0, meaning "ALL", get all the data.
+      sortby, //could be null, default, date-desc, date-asc, etc. Not sure how to utilize this yet. Ignore this for now.
+      status, //approved, pending, or declined. This is required.
     }),
 
   /* Use this function to search papers.
    * Used on `browse` page to search for papers.
    */
-  searchPaper: (query, filter) =>
+  searchPaper: (query, status, filter) =>
     axios.get(`${SEARCH_PAPERS}`, {
-      query,
+      query, //string.
+      status, //approved, pending, or declined. ignore this for now.
       filter, //ignore the filter for now.
     }),
 
@@ -106,5 +111,12 @@ export default {
       authors,
       keywords,
     }),
+
+  /* Use this function to update the status of paper to pending, approved, or declined.
+   * Used on `paper` page to update the status of a paper.
+   */
+  updatPaperStatus: (paperId, status) =>
+    axios.get(`${POST_UPDATE_PAPER_STATUS}`, { paperId, status }),
+
   /* Add more API calls as needed */
 };
