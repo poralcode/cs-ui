@@ -224,3 +224,10 @@ div.full-width {
 .filter-heading {
   @apply text-sm font-medium;
 }
+.nav-tab-button {
+  min-width: unset;
+  @apply border-b-2 border-transparent font-semibold text-start mr-6 ps-0 pe-3 pb-0 text-lg;
+}
+.nav-tab-button-active {
+  @apply rounded-none border-blue-600 text-blue-800;
+}

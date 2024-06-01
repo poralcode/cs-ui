@@ -1,11 +1,11 @@
 import axios from "axios";
 
 /* Use this endpoint to sign in the student or faculty member. This will return the user's profile. */
-const POST_SIGNIN = "https://c861af947d0340e7af544477a9719f6c.api.mockbin.io/";
+const POST_SIGNIN = "https://7f0637a9f7694fb3a2633b43a3a8303d.api.mockbin.io/"; //For Student type: "https://c861af947d0340e7af544477a9719f6c.api.mockbin.io/";
 
 /* Use this endpoint to register a new student or faculty member. This will return the user's profile. */
 const POST_REGISTRATION =
-  "https://c861af947d0340e7af544477a9719f6c.api.mockbin.io/";
+  "https://7f0637a9f7694fb3a2633b43a3a8303d.api.mockbin.io/"; ////For Student type: "https://c861af947d0340e7af544477a9719f6c.api.mockbin.io/";
 
 /* Use this endpoint to upload student papers. This will return the uploaded paper of student in JSON format. */
 const POST_UPLOAD_PAPER =
