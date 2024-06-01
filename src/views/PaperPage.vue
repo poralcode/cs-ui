@@ -30,7 +30,6 @@
       v-if="!showEditForm"
       class="main-content bg-slate-50 flex flex-col items-center"
     >
-      <!-- Align this in top -->
       <div class="w-9/12 flex justify-between max-w-7xl p-5 mt-8 space-x-6">
         <div class="w-full border rounded-lg bg-white p-5 flex flex-col">
           <div class="flex justify-end">
@@ -78,7 +77,6 @@
         </div>
 
         <div class="w-5/12 border rounded-lg bg-white p-5">
-          <!-- 30% width -->
           <div class="flex items-center justify-between">
             <p class="headline-3">Citation</p>
             <font-awesome-icon
@@ -87,23 +85,44 @@
               class="spinner text-blue-700"
               size="2x"
             />
+            <!-- Conditional display for faculty user type -->
             <div
-              v-if="isLoggedIn && !isUpdatingStatus && userType === 'faculty'"
-              class="flex items-center justify-between space-x-2"
+              v-if="isLoggedIn && userType === 'faculty' && !isUpdatingStatus"
             >
-              <button class="btn-icon" @click="updatPaperStatus('approved')">
-                <font-awesome-icon
-                  :icon="['fas', 'thumbs-up']"
-                  class="text-blue-500 mr-2"
-                /><span class="text-blue-500 font-semibold">Approve</span>
-              </button>
-              <button class="btn-icon" @click="updatPaperStatus('declined')">
-                <font-awesome-icon
-                  :icon="['fas', 'thumbs-down']"
-                  class="text-red-500 mr-2"
-                /><span class="text-red-500 font-semibold">Decline</span>
-              </button>
+              <div
+                v-if="
+                  paper.status === 'approved' || paper.status === 'declined'
+                "
+                class="flex items-center justify-between space-x-2"
+              >
+                <button class="btn-icon" @click="updatePaperStatus('pending')">
+                  <font-awesome-icon
+                    :icon="['fas', 'arrows-rotate']"
+                    class="text-orange-500 mr-2"
+                  /><span class="text-orange-500 font-semibold"
+                    >Revert to Pending</span
+                  >
+                </button>
+              </div>
+              <div
+                v-if="paper.status === 'pending'"
+                class="flex items-center justify-between space-x-2"
+              >
+                <button class="btn-icon" @click="updatePaperStatus('approved')">
+                  <font-awesome-icon
+                    :icon="['fas', 'circle-check']"
+                    class="text-blue-500 mr-2"
+                  /><span class="text-blue-500 font-semibold">Approve</span>
+                </button>
+                <button class="btn-icon" @click="updatePaperStatus('declined')">
+                  <font-awesome-icon
+                    :icon="['fas', 'thumbs-down']"
+                    class="text-red-500 mr-2"
+                  /><span class="text-red-500 font-semibold">Decline</span>
+                </button>
+              </div>
             </div>
+            <!-- Conditional display for student user type -->
             <div
               v-if="isLoggedIn && !isDeletingPaper && userType === 'student'"
               class="flex items-center justify-between space-x-2"
@@ -122,6 +141,13 @@
               </button>
             </div>
           </div>
+          <p class="font-semibold mt-3 text-sm text-gray-400">Status</p>
+          <!-- Status with Icon and Color -->
+          <p :class="['capitalize', statusIcon.colorClass]">
+            <font-awesome-icon :icon="statusIcon.icon" class="mr-2" />{{
+              paper.status
+            }}
+          </p>
           <p class="font-semibold mt-3 text-sm text-gray-400">Title</p>
           <p class="text-sm">{{ paper.title }}</p>
           <p class="font-semibold mt-2 text-sm text-gray-400">
@@ -131,13 +157,9 @@
           <p class="font-semibold mt-2 text-sm text-gray-400">Date published</p>
           <p class="">{{ formatDate(paper["date-published"]) }}</p>
           <p class="font-semibold mt-2 text-sm text-gray-400">Abstract</p>
-          <p class="text-sm">
-            {{ paper.abstract }}
-          </p>
+          <p class="text-sm">{{ paper.abstract }}</p>
           <p class="font-semibold mt-2 text-sm text-gray-400">Keywords</p>
-          <p class="text-sm">
-            {{ keywords }}
-          </p>
+          <p class="text-sm">{{ keywords }}</p>
         </div>
       </div>
       <div class="w-9/12 flex flex-col max-w-7xl p-5 mb-8">
@@ -156,7 +178,7 @@ import appFooter from "@/components/AppFooter.vue";
 import cardItem from "@/components/CardItem.vue";
 import editForm from "@/components/EditForm.vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faL, fas } from "@fortawesome/free-solid-svg-icons";
+import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 library.add(fas);
@@ -195,8 +217,28 @@ export default {
     authorString() {
       return this.paper.authors.length > 1 ? "Authors" : "Author";
     },
+    statusIcon() {
+      switch (this.paper.status) {
+        case "approved":
+          return { icon: ["fas", "circle-check"], colorClass: "text-blue-500" };
+        case "declined":
+          return { icon: ["fas", "thumbs-down"], colorClass: "text-red-500" };
+        case "pending":
+          return {
+            icon: ["fas", "hourglass-half"],
+            colorClass: "text-orange-500",
+          };
+        default:
+          return {
+            icon: ["fas", "question-circle"],
+            colorClass: "text-gray-500",
+          };
+      }
+    },
   },
-  mounted() {},
+  mounted() {
+    console.log(this.paper.status);
+  },
   methods: {
     formatDate(date) {
       const options = { year: "numeric", month: "long", day: "numeric" };
@@ -229,15 +271,14 @@ export default {
         this.isDeletingPaper = false;
       }
     },
-    async updatPaperStatus(status) {
+    async updatePaperStatus(status) {
       this.isUpdatingStatus = true;
       try {
-        const response = await this.$api.updatPaperStatus(
+        const response = await this.$api.updatePaperStatus(
           this.paper.id,
           status
         );
-        if (response.data["is-success"]) console.log("OK");
-        // this.$router.push({ path: "/student" });
+        if (response.data["is-success"]) this.paper.status = status;
         else this.errorMessage = response.data.message;
       } catch (error) {
         this.errorMessage = "Unable to update the status of this paper.";
@@ -249,6 +290,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 /* Put CSS style here only if necessary. */
 </style>

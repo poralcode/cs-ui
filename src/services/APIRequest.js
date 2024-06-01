@@ -115,7 +115,7 @@ export default {
   /* Use this function to update the status of paper to pending, approved, or declined.
    * Used on `paper` page to update the status of a paper.
    */
-  updatPaperStatus: (paperId, status) =>
+  updatePaperStatus: (paperId, status) =>
     axios.get(`${POST_UPDATE_PAPER_STATUS}`, { paperId, status }),
 
   /* Add more API calls as needed */
