@@ -87,14 +87,14 @@ This readme should help you get started on the API request.
 <details>
 <summary>POST_UPLOAD_PAPER</summary>
 
-**POST Paramaters:**
+### POST Paramaters:
 
-- userid - The user id of student in database. Take note that this is not the ID Number of the student.
-- title
-- abstract
-- authors - Take note that this is string separated by commas. Backend should be the one to split and process this data.
-- keywords - Take note that this is string separated by commas. Backend should be the one to split and process this data.
-- pdf - Ignore this for now, do not process this.
+- `userid` - The user id of student in database. Take note that this is not the ID Number of the student.
+- `title`
+- `abstract`
+- `authors` - Take note that this is string separated by commas. Backend should be the one to split and process this data.
+- `keywords` - Take note that this is string separated by commas. Backend should be the one to split and process this data.
+- `pdf` - Ignore this for now, do not process this.
 
 This constant stores the URL used for making POST requests to upload the paper of student for approval.
 
@@ -144,13 +144,13 @@ When upload is failed, the following JSON data is the expected result.
 <summary>POST_UPDATE_PAPER</summary>
 <br/>
  
-**POST Paramaters:**
+### POST Paramaters:
 
-- paperid - The id of the paper in database.
-- title
-- abstract
-- authors - Take note that this is string separated by commas. Backend should be the one to split and process this data.
-- keywords - Take note that this is string separated by commas. Backend should be the one to split and process this data.
+- `paperid` - The id of the paper in database.
+- `title`
+- `abstract`
+- `authors` - Take note that this is string separated by commas. Backend should be the one to split and process this data.
+- `keywords` - Take note that this is string separated by commas. Backend should be the one to split and process this data.
 
 This constant stores the URL used for making POST requests to update the content of the paper of student.
 
@@ -200,9 +200,9 @@ When update is failed, the following JSON data is the expected result. Note that
 <summary>POST_DELETE_PAPER</summary>
 <br/>
  
-**POST Paramaters:**
+### POST Paramaters:
 
-- paperid - The id of the paper in database.
+- `paperid` - The id of the paper in database.
 
 This constant stores the URL used for making POST requests to delete the paper of student.
 
@@ -230,10 +230,10 @@ When deleting paper failed, the following JSON data is the expected result.
 <summary>POST_UPDATE_PAPER_STATUS</summary>
 <br/>
  
-**POST Paramaters:**
+### POST Paramaters:
 
-- paperid - The id of the paper in database.
-- status - The status of the paper ('pending', 'approved', 'declined').
+- `paperid` - The id of the paper in database.
+- `status` - The status of the paper ('pending', 'approved', 'declined').
 
 This constant stores the URL used for making POST requests to update the status of the paper of student.
 
@@ -261,9 +261,9 @@ When updating the status of paper failed, the following JSON data is the expecte
 <summary>GET_STUDENT_PAPERS</summary>
 <br/>
  
-**POST Paramaters:**
+### POST Paramaters:
 
-- userid - The id of the user in database.
+- `userid` - The id of the user in database.
 
 This constant stores the URL used for making POST requests to retrieve all the paper of specific student.
 
@@ -335,11 +335,11 @@ When fetching failed, the following JSON data is the expected result.
 <summary>GET_PAPERS</summary>
 <br/>
  
-**POST Paramaters:**
+### POST Paramaters:
 
-- quantity - The quantity of papers to be fetch.
-- sortby - Not sure how to utilize this for now. Sort the result into the latest uppload based on date for now.
-- status - The status of papers to be retrieve ('pending', 'approved', 'declined')
+- `quantity` - The quantity of papers to be fetch.
+- `sortby` - Not sure how to utilize this for now. Sort the result into the latest uppload based on date for now.
+- `status` - The status of papers to be retrieve ('pending', 'approved', 'declined')
 
 This constant stores the URL used for making POST requests to retrieve papers based on the number of quantity and its status.
 
@@ -411,11 +411,11 @@ When fetching failed, the following JSON data is the expected result.
 <summary>SEARCH_PAPERS</summary>
 <br/>
  
-**POST Paramaters:**
+### POST Paramaters:
 
-- query - The string to search. This could be a title, abstract, keywords, and authors. Backend should look into these four entity.
-- status - The status of papers to be search ('pending', 'approved', 'declined')
-- filter - not sure how to utilize this for now. ignore this for now.
+- `query` - The string to search. This could be a title, abstract, keywords, and authors. Backend should look into these four entity.
+- `status` - The status of papers to be search ('pending', 'approved', 'declined')
+- `filter` - not sure how to utilize this for now. ignore this for now.
 
 This constant stores the URL used for making POST requests to search for papers based on the query and its status.
 
