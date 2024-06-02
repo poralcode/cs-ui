@@ -346,3 +346,159 @@ When fetching failed, the following JSON data is the expected result.
 
 </details>
 
+<details>
+<summary>GET_PAPERS</summary>
+<br/>
+ 
+**POST Paramaters:**
+
+ - quantity - The quantity of papers to be fetch.
+ - sortby - Not sure how to utilize this for now. Sort the result into the latest uppload based on date for now. 
+ - status - The status of papers to be retrieve ('pending', 'approved', 'declined')
+   
+This constant stores the URL used for making POST requests to retrieve papers based on the number of quantity and its status.
+
+When fetching is successfull, the following JSON data is the expected result. 
+
+```bash
+{
+  "is-success": true,
+  "message": null,
+  "user-papers": [
+    {
+      "id": 1,
+      "image-url": "", //leave this empty for now.
+      "title": "Public Availability of Published Research Data in High-Impact Journals",
+      "authors": [
+        { "user-id": 1, "name": "Alawi A. Alsheikh-Ali" },
+        { "user-id": 2, "name": "Waqas Qureshi" },
+        //other authors...
+      ],
+      "date-published": "2011-09-07",
+      "rates": 4.5,
+      "likes": 200,
+      "views": 1111,
+      "status": "approved",
+      "keywords": [
+        {"id": 1, "name": "Research Data"},
+        //other keywords...
+      ],
+      "abstract": "This abstract of this paper"
+    },
+    {
+      "id": 2,
+      "image-url": "", //leave this empty for now.
+      "title": "Data Availability",
+      "authors": [
+        { "user-id": 5, "name": "PLOS ONE" }
+        //other authors...
+      ],
+      "date-published": "2021-08-04",
+      "rates": 4.7,
+      "likes": 150,
+      "views": 3400,
+      "status": "approved",
+      "keywords": [
+        {"id": 6, "name": "Data Availability"},
+        {"id": 7, "name": "Open Data"},
+        //other keywords...
+      ],
+      "abstract": "The abstract of this paper"
+    }
+    //other papers here...
+  ]
+}
+
+```
+
+When fetching failed, the following JSON data is the expected result. 
+
+```bash
+{
+    "is-success": false,
+    "user-papers": null,             // Expected to be null when unsuccessful.
+    "message": "The error message"  // The error message. Please ensure simplicity and clarity.
+}
+
+```
+
+</details>
+
+<details>
+<summary>SEARCH_PAPERS</summary>
+<br/>
+ 
+**POST Paramaters:**
+
+ - query - The string to search. This could be a title, abstract, keywords, and authors. Backend should look into these four entity.
+ - status - The status of papers to be search ('pending', 'approved', 'declined')
+ - filter - now sure how to utilize this for now. ignore this for now.
+   
+This constant stores the URL used for making POST requests to search for papers based on the query and its status.
+
+When fetching is successfull, the following JSON data is the expected result. 
+
+```bash
+{
+  "is-success": true,
+  "message": null,
+  "user-papers": [
+    {
+      "id": 1,
+      "image-url": "", //leave this empty for now.
+      "title": "Public Availability of Published Research Data in High-Impact Journals",
+      "authors": [
+        { "user-id": 1, "name": "Alawi A. Alsheikh-Ali" },
+        { "user-id": 2, "name": "Waqas Qureshi" },
+        //other authors...
+      ],
+      "date-published": "2011-09-07",
+      "rates": 4.5,
+      "likes": 200,
+      "views": 1111,
+      "status": "approved",
+      "keywords": [
+        {"id": 1, "name": "Research Data"},
+        //other keywords...
+      ],
+      "abstract": "This abstract of this paper"
+    },
+    {
+      "id": 2,
+      "image-url": "", //leave this empty for now.
+      "title": "Data Availability",
+      "authors": [
+        { "user-id": 5, "name": "PLOS ONE" }
+        //other authors...
+      ],
+      "date-published": "2021-08-04",
+      "rates": 4.7,
+      "likes": 150,
+      "views": 3400,
+      "status": "approved",
+      "keywords": [
+        {"id": 6, "name": "Data Availability"},
+        {"id": 7, "name": "Open Data"},
+        //other keywords...
+      ],
+      "abstract": "The abstract of this paper"
+    }
+    //other papers here...
+  ]
+}
+
+```
+
+When fetching failed, the following JSON data is the expected result. 
+
+```bash
+{
+    "is-success": false,
+    "user-papers": null,             // Expected to be null when unsuccessful.
+    "message": "The error message"  // The error message. Please ensure simplicity and clarity.
+}
+
+```
+
+</details>
+
