@@ -64,7 +64,7 @@ export default {
       abstract,
       authors,
       keywords,
-      pdf,
+      //  pdf,
     }),
 
   /* Use this function to fetch all papers of specific student.

@@ -103,7 +103,7 @@
             class="input-icon-2 text-gray-300"
             size="3x"
           />
-          <span class="text-gray-400 font-medium">Upload File</span>
+          <span class="text-gray-400 font-medium">New Paper</span>
         </button>
         <card-item
           v-for="paper in filteredPapers"
@@ -164,7 +164,8 @@ export default {
   },
   methods: {
     uploadFile() {
-      this.$refs.fileUpload.click();
+      //this.$refs.fileUpload.click();
+      this.showUploadForm = true;
     },
     handleFileUpload() {
       this.dismissErrorMessage();

@@ -1,10 +1,10 @@
 <template>
   <div class="w-full flex flex-col items-center">
-    <div class="w-full flex justify-end">
+    <!-- <div class="w-full flex justify-end">
       <div class="w-56 h-28 object-cover rounded overflow-hidden border">
         <pdf-thumbnail :pdf="pdf" />
       </div>
-    </div>
+    </div> -->
     <div class="mb-3" v-if="errorMessage">
       <p class="notice-error mr-3">
         <font-awesome-icon
@@ -137,8 +137,8 @@ export default {
           this.title,
           this.abstract,
           this.authors,
-          this.keywords,
-          this.pdf
+          this.keywords
+          //this.pdf
         );
         if (response.data["is-success"]) {
           this.$emit("upload-success", response.data);
