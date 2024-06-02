@@ -4,7 +4,8 @@ This readme should help you get started on the API request.
 
 <details>
 <summary>POST_SIGNIN</summary>
-This endpoint is used for authenticating users during the sign-in process.
+
+ ### This endpoint is used for authenticating users during the sign-in process.
  
 ### POST Paramaters:
 - `username`
