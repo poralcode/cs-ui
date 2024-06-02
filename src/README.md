@@ -432,7 +432,7 @@ When fetching failed, the following JSON data is the expected result.
 
  - query - The string to search. This could be a title, abstract, keywords, and authors. Backend should look into these four entity.
  - status - The status of papers to be search ('pending', 'approved', 'declined')
- - filter - now sure how to utilize this for now. ignore this for now.
+ - filter - not sure how to utilize this for now. ignore this for now.
    
 This constant stores the URL used for making POST requests to search for papers based on the query and its status.
 
