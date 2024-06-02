@@ -4,8 +4,7 @@ This readme should help you get started with the API requests.
 
 <details>
 <summary>POST_SIGNIN</summary>
-<br/>
-
+  
 ### POST Parameters:
 
 - `username`
