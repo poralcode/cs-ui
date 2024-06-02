@@ -97,8 +97,8 @@ When registration is failed, the following JSON data is the expected result. The
  - userid - The user id of student in database. Take note that this is not the ID Number of the student.
  - title 
  - abstract
- - authors - Take note that this is string separated by commas. Backend should be the on to split and process this data.
- - keywords - Take note that this is string separated by commas. Backend should be the on to split and process this data.
+ - authors - Take note that this is string separated by commas. Backend should be the one to split and process this data.
+ - keywords - Take note that this is string separated by commas. Backend should be the one to split and process this data.
  - pdf - Ignore this for now, do not process this.
    
 This constant stores the URL used for making POST requests to upload the paper of student for approval.
@@ -135,6 +135,64 @@ When upload is successfull, the following JSON data is the expected result.
 ```
 
 When upload is failed, the following JSON data is the expected result. 
+
+```bash
+{
+    "is-success": false,
+    "user-paper": null,           // Expected to be null when sign-in is unsuccessful.
+    "message": "The error message"  // The error message. Please ensure simplicity and clarity.
+}
+
+```
+
+</details>
+
+<details>
+<summary>POST_UPDATE_PAPER</summary>
+<br/>
+ 
+**POST Paramaters:**
+
+ - paperid - The id of the paper in database.
+ - title 
+ - abstract
+ - authors - Take note that this is string separated by commas. Backend should be the one to split and process this data.
+ - keywords - Take note that this is string separated by commas. Backend should be the one to split and process this data.
+   
+This constant stores the URL used for making POST requests to update the content of the paper of student.
+
+When update is successfull, the following JSON data is the expected result.  Note that the result is similar to POST_UPLOAD_PAPER.
+
+```bash
+{
+  "is-success": true,
+  "message": null, //error message is expected to be null if succesfull.
+  "user-paper": {
+    "id": 13,
+    "image-url": "", // leave this empty for now.
+    "title": "The PageRank citation ranking: Bringing order to the web",
+    "authors": [
+      { "user-id": 5, "name": "PLOS ONE" },
+      { "user-id": 5, "name": "PLOS ONE" },
+      //other author here...
+    ],
+    "date-published": "1999-01-29", 
+    "rates": 0,
+    "likes": 0,
+    "views": 0,
+    "status": "pending", 
+    "keywords": [
+      {"id": 1, "name": "PageRank"},
+      {"id": 2, "name": "Google Search Algorithm"},
+      //other keywords here...
+    ],
+    "abstract": "The abstract of this paper."
+  }
+}
+
+```
+
+When update is failed, the following JSON data is the expected result. Note that the result is similar to POST_UPLOAD_PAPER.
 
 ```bash
 {
