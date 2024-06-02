@@ -141,9 +141,21 @@
               </button>
             </div>
           </div>
-          <p class="font-semibold mt-3 text-sm text-gray-400">Status</p>
+          <p
+            class="font-semibold mt-3 text-sm text-gray-400"
+            v-if="
+              isLoggedIn && (userType === 'faculty' || userType === 'student')
+            "
+          >
+            Status
+          </p>
           <!-- Status with Icon and Color -->
-          <p :class="['capitalize', statusIcon.colorClass]">
+          <p
+            v-if="
+              isLoggedIn && (userType === 'faculty' || userType === 'student')
+            "
+            :class="['capitalize', statusIcon.colorClass]"
+          >
             <font-awesome-icon :icon="statusIcon.icon" class="mr-2" />{{
               paper.status
             }}
@@ -199,10 +211,13 @@ export default {
       isUpdatingStatus: false,
       errorMessage: "",
       showEditForm: false,
-      userType: this.$store.state.userProfile["user-type"],
     };
   },
   computed: {
+    userType() {
+      const type = this.$store.state.userProfile["user-type"];
+      return type !== null ? type : "unknown";
+    },
     paper() {
       return this.$store.state.papers[this.$route.query.paper_id]; // Fetch the paper from the Vuex store using the ID
     },
@@ -236,9 +251,7 @@ export default {
       }
     },
   },
-  mounted() {
-    console.log(this.paper.status);
-  },
+  mounted() {},
   methods: {
     formatDate(date) {
       const options = { year: "numeric", month: "long", day: "numeric" };
@@ -253,8 +266,11 @@ export default {
         return num;
       }
     },
-    handleEditSuccess(data) {
-      this.paper = data;
+    handleEditSuccess(updatedPaper) {
+      this.paper.title = updatedPaper.title;
+      this.paper.abstract = updatedPaper.abstract;
+      this.paper.authors = updatedPaper.authors;
+      this.paper.keywords = updatedPaper.keywords;
       this.showEditForm = false;
     },
     async deletePaper() {

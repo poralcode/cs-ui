@@ -231,3 +231,6 @@ div.full-width {
 .nav-tab-button-active {
   @apply rounded-none border-blue-600 text-blue-800;
 }
+.unset-min-width {
+  min-width: unset !important;
+}

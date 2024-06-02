@@ -4,6 +4,10 @@ This readme should help you get started on the API request.
 
 <details>
 <summary>POST_SIGNIN</summary>
+** POST Paramaters: **
+ - username
+ - password
+
 This constant stores the URL used for making POST requests to authenticate users during the sign-in process.
 
 When signing in successfully, the following JSON data is the expected result.

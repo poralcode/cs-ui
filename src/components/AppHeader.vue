@@ -14,7 +14,8 @@
         v-if="
           $route.name !== 'signin' &&
           $route.name !== 'register' &&
-          $route.name !== 'student'
+          $route.name !== 'student' &&
+          $route.name !== 'faculty'
         "
       >
         <div class="main-search-bar">
@@ -63,16 +64,24 @@
             />Find Papers
           </button>
         </router-link>
-        <button class="btn-border-bottom">Dashboard</button>
-        <router-link to="/browse">
-          <button class="btn-none-bg">
-            <span>Account</span
-            ><img
-              class="avatar-small"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLGd54hSGC4Ig1fZ4ahKQ2H9Ne_-uGP93fJ4TWrHj3rQ&s"
-            />
+        <router-link to="/{{userType}}">
+          <button
+            :class="
+              $route.name === 'faculty' || $route.name === 'student'
+                ? 'btn-border-bottom'
+                : 'btn-none-bg unset-min-width'
+            "
+          >
+            Dashboard
           </button>
         </router-link>
+        <button class="btn-none-bg">
+          <span>Account</span
+          ><img
+            class="avatar-small"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLGd54hSGC4Ig1fZ4ahKQ2H9Ne_-uGP93fJ4TWrHj3rQ&s"
+          />
+        </button>
       </div>
     </div>
   </header>
@@ -98,6 +107,17 @@ export default {
       isScrolling: false,
       searchQuery: "",
     };
+  },
+  computed: {
+    userType() {
+      const type = this.$store.state.userProfile["user-type"];
+      return type !== null ? type : "unknown";
+    },
+    dashboardButtonClass() {
+      return $route.name === "faculty" || $route.name === "student"
+        ? "btn-border-bottom"
+        : "btn-none-bg";
+    },
   },
   methods: {
     scroll() {
