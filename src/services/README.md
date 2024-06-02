@@ -5,7 +5,7 @@ This readme should help you get started on the API request.
 <details>
 <summary>POST_SIGNIN</summary>
 
- ### This endpoint is used for authenticating users during the sign-in process.
+### This endpoint is used for authenticating users during the sign-in process.
  
 ### POST Paramaters:
 - `username`
@@ -14,7 +14,7 @@ This readme should help you get started on the API request.
 ### Successful Sign-in Response:
 ```json
 {
-    "is-success": true,         // Indicates whether the sign-in was successful (true/false).
+    "is-success": true,         /* Indicates whether the sign-in was successful (true/false). */
     "user-profile": {
         "id": 1,                 // User's ID in the database, used for transactions.
         "id-number": 12345678,   // Student or faculty ID number. For students, this is required. The format depends on the backend and is displayed as is in the UI.
