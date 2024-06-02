@@ -36,7 +36,7 @@ When signing in failed, the following JSON data is the expected result.
 ```bash
 {
     "is-success": false,
-    "user-profile": null,           // Expected to be null when sign-in is unsuccessful.
+    "user-profile": null,           // Expected to be null when unsuccessful.
     "message": "The error message"  // The error message. Please ensure simplicity and clarity.
 }
 
@@ -81,7 +81,7 @@ When registration is failed, the following JSON data is the expected result. The
 ```bash
 {
     "is-success": false,
-    "user-profile": null,           // Expected to be null when sign-in is unsuccessful.
+    "user-profile": null,           // Expected to be null when unsuccessful.
     "message": "The error message"  // The error message. Please ensure simplicity and clarity.
 }
 
@@ -139,7 +139,7 @@ When upload is failed, the following JSON data is the expected result.
 ```bash
 {
     "is-success": false,
-    "user-paper": null,           // Expected to be null when sign-in is unsuccessful.
+    "user-paper": null,           // Expected to be null when unsuccessful.
     "message": "The error message"  // The error message. Please ensure simplicity and clarity.
 }
 
@@ -197,7 +197,7 @@ When update is failed, the following JSON data is the expected result. Note that
 ```bash
 {
     "is-success": false,
-    "user-paper": null,           // Expected to be null when sign-in is unsuccessful.
+    "user-paper": null,           // Expected to be null when unsuccessful.
     "message": "The error message"  // The error message. Please ensure simplicity and clarity.
 }
 
@@ -258,11 +258,87 @@ When update of status is successfull, the following JSON data is the expected re
 
 ```
 
-When deleting paper failed, the following JSON data is the expected result. 
+When updating the status of paper failed, the following JSON data is the expected result. 
 
 ```bash
 {
     "is-success": false,
+    "message": "The error message"  // The error message. Please ensure simplicity and clarity.
+}
+
+```
+
+</details>
+
+<details>
+<summary>GET_STUDENT_PAPERS</summary>
+<br/>
+ 
+**POST Paramaters:**
+
+ - userid - The id of the user in database.
+   
+This constant stores the URL used for making POST requests to retrieve all the paper of specific student.
+
+When fetching is successfull, the following JSON data is the expected result. 
+
+```bash
+{
+  "is-success": true,
+  "message": null,
+  "user-papers": [
+    {
+      "id": 1,
+      "image-url": "", //leave this empty for now.
+      "title": "Public Availability of Published Research Data in High-Impact Journals",
+      "authors": [
+        { "user-id": 1, "name": "Alawi A. Alsheikh-Ali" },
+        { "user-id": 2, "name": "Waqas Qureshi" },
+        //other authors...
+      ],
+      "date-published": "2011-09-07",
+      "rates": 4.5,
+      "likes": 200,
+      "views": 1111,
+      "status": "approved",
+      "keywords": [
+        {"id": 1, "name": "Research Data"},
+        //other keywords...
+      ],
+      "abstract": "This abstract of this paper"
+    },
+    {
+      "id": 2,
+      "image-url": "", //leave this empty for now.
+      "title": "Data Availability",
+      "authors": [
+        { "user-id": 5, "name": "PLOS ONE" }
+        //other authors...
+      ],
+      "date-published": "2021-08-04",
+      "rates": 4.7,
+      "likes": 150,
+      "views": 3400,
+      "status": "approved",
+      "keywords": [
+        {"id": 6, "name": "Data Availability"},
+        {"id": 7, "name": "Open Data"},
+        //other keywords...
+      ],
+      "abstract": "The abstract of this paper"
+    }
+    //other papers here...
+  ]
+}
+
+```
+
+When fetching failed, the following JSON data is the expected result. 
+
+```bash
+{
+    "is-success": false,
+    "user-papers": null,             // Expected to be null when unsuccessful.
     "message": "The error message"  // The error message. Please ensure simplicity and clarity.
 }
 
