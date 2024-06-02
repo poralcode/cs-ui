@@ -4,18 +4,14 @@ This readme should help you get started on the API request.
 
 <details>
 <summary>POST_SIGNIN</summary>
- <br/>
+This endpoint is used for authenticating users during the sign-in process.
  
-**POST Paramaters:**
-
-- username
-- password
-
-This constant stores the URL used for making POST requests to authenticate users during the sign-in process.
-
-When signing in successfully, the following JSON data is the expected result.
-
-```bash
+### POST Paramaters:
+- `username`
+- `password`
+ 
+### Successful Sign-in Response:
+```json
 {
     "is-success": true,         // Indicates whether the sign-in was successful (true/false).
     "user-profile": {
@@ -31,8 +27,7 @@ When signing in successfully, the following JSON data is the expected result.
 
 ```
 
-When signing in failed, the following JSON data is the expected result.
-
+### Failed Sign-in Response:
 ```bash
 {
     "is-success": false,
