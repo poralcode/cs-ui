@@ -205,3 +205,68 @@ When update is failed, the following JSON data is the expected result. Note that
 
 </details>
 
+<details>
+<summary>POST_DELETE_PAPER</summary>
+<br/>
+ 
+**POST Paramaters:**
+
+ - paperid - The id of the paper in database.
+   
+This constant stores the URL used for making POST requests to delete the paper of student.
+
+When delete is successfull, the following JSON data is the expected result. 
+
+```bash
+{
+    "is-success": true,
+    "message": null //message is expected to be null on success.
+}
+
+```
+
+When deleting paper failed, the following JSON data is the expected result. 
+
+```bash
+{
+    "is-success": false,
+    "message": "The error message"  // The error message. Please ensure simplicity and clarity.
+}
+
+```
+
+</details>
+
+<details>
+<summary>POST_UPDATE_PAPER_STATUS</summary>
+<br/>
+ 
+**POST Paramaters:**
+
+ - paperid - The id of the paper in database.
+ - status - The status of the paper ('pending', 'approved', 'declined').
+   
+This constant stores the URL used for making POST requests to update the status of the paper of student.
+
+When update of status is successfull, the following JSON data is the expected result. 
+
+```bash
+{
+    "is-success": true,
+    "message": null //message is expected to be null on success.
+}
+
+```
+
+When deleting paper failed, the following JSON data is the expected result. 
+
+```bash
+{
+    "is-success": false,
+    "message": "The error message"  // The error message. Please ensure simplicity and clarity.
+}
+
+```
+
+</details>
+
