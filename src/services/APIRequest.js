@@ -91,7 +91,7 @@ export default {
   searchPaper: (query, status, filter) =>
     axios.get(`${SEARCH_PAPERS}`, {
       query, //string.
-      status, //approved, pending, or declined. ignore this for now.
+      status, //approved, pending, or declined.
       filter, //ignore the filter for now.
     }),
 
@@ -103,9 +103,9 @@ export default {
   /* Use this function to update paper.
    * Used on `paper` page to update paper.
    */
-  updatePaper: (userid, title, abstract, authors, keywords) =>
+  updatePaper: (paperid, title, abstract, authors, keywords) =>
     axios.post(`${POST_UPDATE_PAPER}`, {
-      userid,
+      paperid,
       title,
       abstract,
       authors,
