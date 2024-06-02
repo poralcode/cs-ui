@@ -142,7 +142,7 @@ When upload is failed, the following JSON data is the expected result.
 
 <details>
 <summary>POST_UPDATE_PAPER</summary>
-<br/>
+
  
 ### POST Paramaters:
 
@@ -198,7 +198,7 @@ When update is failed, the following JSON data is the expected result. Note that
 
 <details>
 <summary>POST_DELETE_PAPER</summary>
-<br/>
+
  
 ### POST Paramaters:
 
@@ -228,7 +228,7 @@ When deleting paper failed, the following JSON data is the expected result.
 
 <details>
 <summary>POST_UPDATE_PAPER_STATUS</summary>
-<br/>
+
  
 ### POST Paramaters:
 
@@ -259,7 +259,7 @@ When updating the status of paper failed, the following JSON data is the expecte
 
 <details>
 <summary>GET_STUDENT_PAPERS</summary>
-<br/>
+
  
 ### POST Paramaters:
 
@@ -333,7 +333,7 @@ When fetching failed, the following JSON data is the expected result.
 
 <details>
 <summary>GET_PAPERS</summary>
-<br/>
+
  
 ### POST Paramaters:
 
@@ -409,7 +409,7 @@ When fetching failed, the following JSON data is the expected result.
 
 <details>
 <summary>SEARCH_PAPERS</summary>
-<br/>
+
  
 ### POST Paramaters:
 
