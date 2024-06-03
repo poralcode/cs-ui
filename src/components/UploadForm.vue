@@ -105,17 +105,17 @@ import dataMixins from "@/mixins/DataMixins.js";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import PdfThumbnail from "@/components/PdfThumbnail.vue";
+//import PdfThumbnail from "@/components/PdfThumbnail.vue";
 
 library.add(fas);
 
 export default {
   name: "UploadForm",
-  props: ["pdf"],
+  // props: ["pdf"],
   mixins: [dataMixins],
   components: {
     FontAwesomeIcon,
-    PdfThumbnail,
+    // PdfThumbnail,
   },
   data() {
     return {

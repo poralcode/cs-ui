@@ -15,7 +15,7 @@
         </button>
       </div>
       <div class="w-8/12 flex justify-between max-w-7xl p-5">
-        <upload-form :pdf="pdf" @upload-success="handleUploadSuccess" />
+        <upload-form @upload-success="handleUploadSuccess" />
       </div>
     </div>
     <div
@@ -90,14 +90,14 @@
         class="w-8/12 grid grid-cols-4 gap-y-8 gap-4 max-w-7xl mb-8 pl-5 pr-5"
       >
         <button class="btn-card" @click="uploadFile">
-          <input
+          <!-- input
             type="file"
             id="fileUpload"
             ref="fileUpload"
             @change="handleFileUpload"
             style="display: none"
             accept=".pdf"
-          />
+          /> -->
           <font-awesome-icon
             :icon="['fas', 'cloud-arrow-up']"
             class="input-icon-2 text-gray-300"
@@ -144,7 +144,7 @@ export default {
       errorMessage: "",
       userPapers: null,
       search: "",
-      pdf: null,
+      //pdf: null,
       showUploadForm: false,
     };
   },
@@ -167,7 +167,7 @@ export default {
       //this.$refs.fileUpload.click();
       this.showUploadForm = true;
     },
-    handleFileUpload() {
+    /* handleFileUpload() {
       this.dismissErrorMessage();
       const files = this.$refs.fileUpload.files;
       if (files.length > 0) {
@@ -175,11 +175,11 @@ export default {
         if (file.type !== "application/pdf") {
           this.errorMessage = "The selected file is not a valid PDF file.";
         } else {
-          this.pdf = file;
+         // this.pdf = file;
           this.showUploadForm = true;
         }
       }
-    },
+    },*/
     dismissErrorMessage() {
       this.errorMessage = "";
     },
