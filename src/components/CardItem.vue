@@ -1,7 +1,7 @@
 <template>
   <div class="card-view" @click="navigateToPaper">
     <div class="card-main-content">
-      <img :src="paper['image-url']" alt="Image" />
+      <img :src="paperImageUrl" alt="Image" />
       <div class="mt-4">
         <div class="card-title">{{ paper.title }}</div>
         <p class="card-author">{{ authorString }}</p>
@@ -45,6 +45,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import logo from "@/assets/images/logo.svg";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -65,6 +66,9 @@ export default {
     };
   },
   computed: {
+    paperImageUrl() {
+      return this.getRandomImage();
+    },
     authorString() {
       const authors = this.paper?.authors?.map((author) => author.name) || [];
       const authorWord = authors.length === 1 ? "Author" : "Authors";
@@ -129,9 +133,17 @@ export default {
           return "";
       }
     },
+    getRandomImage() {
+      const width = 200;
+      const height = 100;
+      return `https://picsum.photos/${width}/${height}?random=${Math.floor(
+        Math.random() * 1000
+      )}`;
+    },
   },
 };
 </script>
+
 <style scoped>
 /* Put CSS style here only if necessary. */
 </style>

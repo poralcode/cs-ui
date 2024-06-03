@@ -190,11 +190,11 @@ export default {
         const response = await this.$api.getStudentPapers(
           this.userProfile["id"]
         );
-        console.log("Response from server: " + JSON.stringify(response));
+        /*console.log("Response from server: " + JSON.stringify(response));
         console.log(
           "Response from server of user-paper: " +
             JSON.stringify(response.data["user-papers"])
-        );
+        );*/
         if (response.data["is-success"])
           this.userPapers = response.data["user-papers"];
         else this.errorMessage = response.data.message;
@@ -207,11 +207,11 @@ export default {
     },
     handleUploadSuccess(data) {
       this.showUploadForm = false;
-      console.log("Response from server: " + JSON.stringify(data));
+      /*console.log("Response from server: " + JSON.stringify(data));
       console.log(
         "Response from server of user-paper: " +
           JSON.stringify(data["user-paper"])
-      );
+      );*/
       this.userPapers.unshift(data["user-paper"]);
     },
   },

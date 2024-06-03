@@ -166,8 +166,8 @@
             {{ authorString }}
           </p>
           <p class="text-sm">{{ authors }}</p>
-          <p class="font-semibold mt-2 text-sm text-gray-400">Date published</p>
-          <p class="">{{ formatDate(paper["date-published"]) }}</p>
+          <!-- <p class="font-semibold mt-2 text-sm text-gray-400">Date published</p>
+          <p class="">{{ formatDate(paper["date-published"]) }}</p> -->
           <p class="font-semibold mt-2 text-sm text-gray-400">Abstract</p>
           <p class="text-sm">{{ paper.abstract }}</p>
           <p class="font-semibold mt-2 text-sm text-gray-400">Keywords</p>
