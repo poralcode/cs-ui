@@ -64,7 +64,7 @@
             />Find Papers
           </button>
         </router-link>
-        <router-link to="/{{userType}}">
+        <router-link :to="userDashboardLink">
           <button
             :class="
               $route.name === 'faculty' || $route.name === 'student'
@@ -86,6 +86,7 @@
     </div>
   </header>
 </template>
+
 <script>
 import dataMixins from "@/mixins/DataMixins.js";
 import logo from "@/assets/images/logo.svg";
@@ -110,11 +111,14 @@ export default {
   },
   computed: {
     userType() {
-      const type = this.$store.state.userProfile["user-type"];
+      const type = this.$store.state.userProfile?.["user-type"];
       return type !== null ? type : "unknown";
     },
+    userDashboardLink() {
+      return `/${this.userType}`;
+    },
     dashboardButtonClass() {
-      return $route.name === "faculty" || $route.name === "student"
+      return this.$route.name === "faculty" || this.$route.name === "student"
         ? "btn-border-bottom"
         : "btn-none-bg";
     },
@@ -140,6 +144,7 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 /* Put CSS style here only if necessary. */
 </style>
