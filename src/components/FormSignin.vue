@@ -1,5 +1,23 @@
 <template>
   <div>
+    <div class="input-container mb-4">
+      <label for="username">Are you a Student or Faculty?</label>
+      <div class="input-container-inner">
+        <span>
+          <font-awesome-icon :icon="['fas', 'suitcase']" class="input-icon" />
+        </span>
+        <select v-model="usertype" :disabled="isLoading">
+          <option value="student">I am student</option>
+          <option value="faculty">I am faculty</option>
+        </select>
+        <span class="right-icon">
+          <font-awesome-icon
+            :icon="['fas', 'chevron-down']"
+            class="input-icon"
+          />
+        </span>
+      </div>
+    </div>
     <div class="input-container">
       <label for="username">Username or email</label>
       <div class="input-container-inner">
@@ -67,6 +85,7 @@ export default {
   },
   data() {
     return {
+      usertype: "student" /* Default selected usertype */,
       username: "",
       password: "",
       isLoading: false,
@@ -78,7 +97,11 @@ export default {
       this.errorMessage = "";
       this.isLoading = true;
       try {
-        const response = await this.$api.signIn(this.username, this.password);
+        const response = await this.$api.signIn(
+          this.usertype,
+          this.username,
+          this.password
+        );
         if (response.data["is-success"]) {
           this.$store.commit("setUserProfile", response.data["user-profile"]);
           this.$router.push("/" + response.data["user-profile"]["user-type"]);
