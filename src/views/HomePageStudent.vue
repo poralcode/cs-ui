@@ -202,6 +202,8 @@ export default {
     },
     handleUploadSuccess(data) {
       this.showUploadForm = false;
+      console.log("Response from server: " + data);
+      console.log("Response from server of user-paper: " + data["user-paper"]);
       this.userPapers.unshift(data["user-paper"]);
     },
   },
