@@ -49,7 +49,7 @@
           <p class="filter-heading ml-1 mt-5">Readers</p>
           <!-- Filter Authors -->
           <p class="filter-heading ml-1 mt-5">Authors</p>
-          <div class="input-container mt-2">
+          <div class="input-container mt-2 mb-5">
             <div class="input-container-inner">
               <span>
                 <font-awesome-icon
@@ -66,6 +66,32 @@
               />
             </div>
           </div>
+          <div
+            v-for="author in uniqueAuthors"
+            :key="author['user-id']"
+            class="filter-author-list"
+          >
+            <input
+              type="checkbox"
+              :value="author['user-id']"
+              v-model="selectedAuthors"
+              :id="'author-' + author['user-id']"
+            />
+            <label :for="'author-' + author['user-id']">{{
+              author.name
+            }}</label>
+          </div>
+          <!-- <div v-for="author in uniqueAuthors" :key="author['user-id']">
+            <div class="flex items-center">
+              <input
+                type="checkbox"
+                :value="author['user-id']"
+                v-model="selectedAuthors"
+                :id="author['user-id']"
+              />
+              <label :for="author['user-id']">{{ author.name }}</label>
+            </div>
+          </div> -->
         </div>
         <!-- Cards Elements -->
         <div class="w-full p-5 flex flex-col">
@@ -162,6 +188,7 @@ export default {
   },
   data() {
     return {
+      selectedAuthors: [],
       isGettingPapers: false,
       errorMessage: "",
       search: "",
@@ -170,6 +197,26 @@ export default {
       filter: this.$route.query.f !== null ? this.$route.query.f : "title", //default is title specially when its null.
       searchQueryFromRoute: this.$route.query.q || "",
     };
+  },
+  computed: {
+    uniqueAuthors() {
+      if (this.userPapers !== null) {
+        const authors = this.userPapers
+          // Map through each paper to get the authors array
+          .map((paper) => paper.authors)
+          // Flatten the array of arrays into a single array
+          .flat()
+          // Reduce the array to only unique authors based on the 'user-id'
+          .reduce((unique, author) => {
+            if (!unique.some((u) => u["user-id"] === author["user-id"])) {
+              unique.push(author);
+            }
+            return unique;
+          }, []);
+        return authors;
+      }
+      return [];
+    },
   },
   mounted() {
     this.getPapers();

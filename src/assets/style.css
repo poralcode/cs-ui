@@ -259,3 +259,10 @@ div.full-width {
 .unset-min-width {
   min-width: unset !important;
 }
+.filter-author-list {
+  @apply flex justify-start items-center mt-2 font-semibold text-sm;
+}
+.filter-author-list input {
+  min-width: unset;
+  @apply mr-4;
+}
