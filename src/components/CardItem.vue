@@ -91,6 +91,10 @@ export default {
   },
   methods: {
     navigateToPaper() {
+      if (this.$route.path === "/paper") {
+        // Scroll to the top of the page
+        window.scrollTo(0, 0);
+      }
       this.$store.commit("addPaper", this.paper);
       this.$router.push({
         path: "/paper",
