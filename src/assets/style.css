@@ -97,7 +97,7 @@ img.avatar-small {
   @apply text-gray-400;
 }
 .main-search-bar {
-  @apply relative w-full md:w-1/2;
+  @apply relative w-full w-4/5;
 }
 .notice-error,
 .notice-warning,
@@ -107,7 +107,7 @@ img.avatar-small {
 .notice-error {
   @apply bg-red-100 text-red-700;
 }
-.main-search-bar span,
+/*.main-search-bar span,*/
 .input-container span {
   @apply absolute inset-y-0 left-0 flex items-center pl-5;
 }
@@ -115,9 +115,34 @@ div.input-container-inner > span.right-icon {
   @apply pr-5 right-5 inset-y-0;
 }
 .main-search-bar input {
-  @apply pl-12 pr-4 py-2 shadow w-full;
+  @apply pl-6 pr-4 py-2 shadow w-full border;
   border-radius: var(--button-input-border-radius);
   border: solid 1px var(--border-gray);
+}
+.main-search-bar .action-container {
+  @apply border flex items-center absolute top-0 right-0 border-0 bottom-0 pl-3 justify-between font-semibold text-gray-400;
+}
+.main-search-bar .action-container span {
+  @apply flex h-full items-center pl-2;
+  border: 1px solid var(--border-gray);
+  border-right-color: transparent;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  cursor: default;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+.main-search-bar .action-container button {
+  min-width: 60px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+  @apply h-full;
+}
+.main-search-bar .action-container select {
+  border-left: 0px;
+  margin-left: 5px;
+  @apply h-full pr-3 box-border border border-transparent bg-transparent text-gray-700;
 }
 .app-header {
   @apply flex justify-center items-center p-4 bg-white sticky top-0 w-full z-50;

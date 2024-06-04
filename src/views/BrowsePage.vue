@@ -167,12 +167,22 @@ export default {
       search: "",
       userPapers: null,
       paper: null,
-      filter: null,
+      filter: this.$route.query.f !== null ? this.$route.query.f : "title", //default is title specially when its null.
       searchQueryFromRoute: this.$route.query.q || "",
     };
   },
   mounted() {
     this.getPapers();
+  },
+  watch: {
+    $route(to, from) {
+      if (
+        to.name === "browse" &&
+        (to.query.q !== from.query.q || to.query.f !== from.query.f)
+      ) {
+        this.getPapers();
+      }
+    },
   },
   methods: {
     async getPapers() {

@@ -19,15 +19,23 @@
         "
       >
         <div class="main-search-bar">
-          <span>
-            <font-awesome-icon :icon="['fas', 'search']" class="input-icon" />
-          </span>
           <input
             type="text"
             v-model="searchQuery"
-            placeholder="Search topics or authors"
+            placeholder="Search here..."
             @keyup.enter="performSearch"
           />
+          <div class="action-container">
+            <span>Search by:</span>
+            <select id="search-filter-action" v-model="searchFilter">
+              <option value="title">Title</option>
+              <option value="author">Author</option>
+              <option value="keywords">Keywords</option>
+            </select>
+            <button class="btn-normal" @click="performSearch">
+              <font-awesome-icon :icon="['fas', 'search']" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -107,6 +115,7 @@ export default {
       logo,
       isScrolling: false,
       searchQuery: "",
+      searchFilter: "title", //default search filter.
     };
   },
   computed: {
@@ -131,7 +140,7 @@ export default {
       if (this.searchQuery.trim()) {
         this.$router.push({
           path: "/browse",
-          query: { q: this.searchQuery },
+          query: { q: this.searchQuery, f: this.searchFilter },
         });
       }
     },

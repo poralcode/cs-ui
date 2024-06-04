@@ -8,7 +8,7 @@
       </div>
     </div>
     <div class="additional-info">
-      <p class="card-date">{{ formatDate(paper["date-published"]) }}</p>
+      <!-- <p class="card-date">{{ formatDate(paper["date-published"]) }}</p> -->
       <p
         v-if="showStatus"
         class="font-medium capitalize"
@@ -62,6 +62,7 @@ export default {
   },
   data() {
     return {
+      imageCache: [],
       logo,
     };
   },
