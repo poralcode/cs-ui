@@ -194,7 +194,7 @@
         />
         <div
           v-if="!isGettingRelatedPapers"
-          class="grid grid-cols-4 gap-y-8 gap-4 mt-5"
+          class="grid grid-cols-5 gap-y-8 gap-4 mt-5"
         >
           <card-item
             v-for="paper in relatedPapers"
@@ -336,19 +336,23 @@ export default {
     async searchRelatedPapers() {
       this.isGettingRelatedPapers = true;
       try {
-        const response = await this.$api.searchPaper(
-          this.paper.authors,
-          "approved",
-          "author"
-        );
-        const response2 = await this.$api.searchPaper(
-          this.paper.keywords,
-          "approved",
-          "keywords"
-        );
-        if (response.data["is-success"])
-          this.relatedPapers = response.data["user-papers"];
-        else this.errorMessage = response.data.message;
+        const [responseAuthors, responseKeywords] = await Promise.all([
+          this.$api.searchPaper(this.paper.authors, "approved", "author"),
+          this.$api.searchPaper(this.paper.keywords, "approved", "keywords"),
+        ]);
+
+        this.relatedPapers = [];
+        if (responseAuthors.data["is-success"]) {
+          this.relatedPapers.push(...responseAuthors.data["user-papers"]);
+        } else {
+          this.errorMessage = responseAuthors.data.message;
+        }
+
+        if (responseKeywords.data["is-success"]) {
+          this.relatedPapers.push(...responseKeywords.data["user-papers"]);
+        } else {
+          this.errorMessage = responseKeywords.data.message;
+        }
       } catch (error) {
         this.errorMessage = "Unable to retrieve list of related papers.";
         console.error(error);
