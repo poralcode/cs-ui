@@ -200,7 +200,8 @@
             v-for="paper in relatedPapers"
             :key="paper.id"
             :paper="paper"
-            :showStatus="true"
+            :showStatus="false"
+            :publicView="true"
           />
         </div>
       </div>
