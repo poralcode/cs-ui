@@ -266,3 +266,14 @@ div.full-width {
   min-width: unset;
   @apply mr-4;
 }
+button.btn-pagination {
+  min-width: unset;
+  @apply px-3 py-1 rounded-full border border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white;
+}
+li.btn-pagination-active button.btn-pagination {
+  @apply bg-blue-700 text-white;
+}
+button.btn-pagination-next-prev {
+  min-width: unset;
+  @apply px-3 py-1 rounded-full border border-blue-700 text-blue-700 hover:bg-blue-700 hover:text-white;
+}

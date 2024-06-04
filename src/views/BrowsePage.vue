@@ -81,17 +81,6 @@
               author.name
             }}</label>
           </div>
-          <!-- <div v-for="author in uniqueAuthors" :key="author['user-id']">
-            <div class="flex items-center">
-              <input
-                type="checkbox"
-                :value="author['user-id']"
-                v-model="selectedAuthors"
-                :id="author['user-id']"
-              />
-              <label :for="author['user-id']">{{ author.name }}</label>
-            </div>
-          </div> -->
         </div>
         <!-- Cards Elements -->
         <div class="w-full p-5 flex flex-col">
@@ -148,7 +137,7 @@
             class="grid grid-cols-4 gap-y-8 gap-4 mt-5"
           >
             <card-item
-              v-for="paper in userPapers"
+              v-for="paper in paginatedPapers"
               :key="paper.id"
               :paper="paper"
               :publicView="true"
@@ -158,9 +147,48 @@
         </div>
       </div>
       <!-- Show this only if there are multiple items. -->
-      <div class="w-9/12 flex max-w-7xl p-5 mb-8 justify-end hidden">
-        <p class="headline-3 border">This is navigation page</p>
+      <div
+        v-if="!isGettingPapers && totalPages > 1"
+        class="w-9/12 flex max-w-7xl p-5 mb-8 justify-end items-center"
+      >
+        <p class="mr-4 text-gray-600 font-semibold mr-8">Pages</p>
+        <ul class="flex justify-center space-x-4">
+          <li>
+            <button
+              @click="changePage(currentPage - 1)"
+              :disabled="currentPage === 1"
+              class="btn-pagination-next-prev"
+            >
+              &laquo;
+            </button>
+          </li>
+          <li
+            v-for="page in totalPages"
+            :key="page"
+            :class="{
+              'btn-pagination-active': page === currentPage,
+              '': page !== currentPage,
+            }"
+          >
+            <button @click="changePage(page)" class="btn-pagination">
+              {{ page }}
+            </button>
+          </li>
+          <li>
+            <button
+              @click="changePage(currentPage + 1)"
+              :disabled="currentPage === totalPages"
+              class="btn-pagination-next-prev"
+            >
+              &raquo;
+            </button>
+          </li>
+        </ul>
       </div>
+
+      <!-- <div class="w-9/12 flex max-w-7xl p-5 mb-8 justify-end hidden">
+        <p class="headline-3 border">This is navigation page</p>
+      </div> -->
     </div>
     <app-footer />
   </div>
@@ -196,17 +224,30 @@ export default {
       paper: null,
       filter: this.$route.query.f !== null ? this.$route.query.f : "title", //default is title specially when its null.
       searchQueryFromRoute: this.$route.query.q || "",
+      currentPage: 1,
+      itemsPerPage: 12,
     };
   },
   computed: {
+    totalPages() {
+      if (this.userPapers !== null) {
+        return Math.ceil(this.userPapers.length / this.itemsPerPage);
+      }
+      return 0;
+    },
+    paginatedPapers() {
+      if (this.userPapers !== null) {
+        const start = (this.currentPage - 1) * this.itemsPerPage;
+        const end = start + this.itemsPerPage;
+        return this.userPapers.slice(start, end);
+      }
+      return 0;
+    },
     uniqueAuthors() {
       if (this.userPapers !== null) {
         const authors = this.userPapers
-          // Map through each paper to get the authors array
           .map((paper) => paper.authors)
-          // Flatten the array of arrays into a single array
           .flat()
-          // Reduce the array to only unique authors based on the 'user-id'
           .reduce((unique, author) => {
             if (!unique.some((u) => u["user-id"] === author["user-id"])) {
               unique.push(author);
@@ -250,6 +291,11 @@ export default {
         console.error(error);
       } finally {
         this.isGettingPapers = false;
+      }
+    },
+    changePage(page) {
+      if (page > 0 && page <= this.totalPages) {
+        this.currentPage = page;
       }
     },
   },
