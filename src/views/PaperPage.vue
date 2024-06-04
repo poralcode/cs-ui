@@ -124,7 +124,12 @@
             </div>
             <!-- Conditional display for student user type -->
             <div
-              v-if="isLoggedIn && !isDeletingPaper && userType === 'student'"
+              v-if="
+                isLoggedIn &&
+                !isDeletingPaper &&
+                userType === 'student' &&
+                isPaperOwner
+              "
               class="flex items-center justify-between space-x-2"
             >
               <button class="btn-icon" @click="showEditForm = true">
@@ -243,6 +248,9 @@ export default {
     };
   },
   computed: {
+    isPaperOwner() {
+      return this.paper.authors.includes(this.userId);
+    },
     userType() {
       const type = this.$store.state.userProfile["user-type"];
       return type !== null ? type : "unknown";
