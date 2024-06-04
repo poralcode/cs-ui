@@ -174,19 +174,35 @@
           <p class="text-sm">{{ keywords }}</p>
         </div>
       </div>
-      <div class="w-9/12 flex flex-col max-w-7xl p-5 mb-0">
+      <!-- <div class="w-9/12 flex flex-col max-w-7xl p-5 mb-0">
         <p class="headline-3">Related Literature</p>
         <p class="text-sm text-gray-400">No related literature so far.</p>
-      </div>
+      </div> -->
       <div class="w-9/12 flex flex-col max-w-7xl p-5 mb-8">
         <p class="headline-3">Related Paper</p>
-        <p class="text-sm text-gray-400">No related paper.</p>
-        <card-item
-          v-for="paper in relatedPapers"
-          :key="paper.id"
-          :paper="paper"
-          :showStatus="true"
+        <p
+          class="text-sm text-gray-400"
+          v-if="!isGettingRelatedPapers && relatedPapers.length === 0"
+        >
+          No related paper.
+        </p>
+        <font-awesome-icon
+          v-if="isGettingRelatedPapers"
+          :icon="['fas', 'spinner']"
+          class="spinner text-blue-700"
+          size="2x"
         />
+        <div
+          v-if="!isGettingRelatedPapers"
+          class="grid grid-cols-4 gap-y-8 gap-4 mt-5"
+        >
+          <card-item
+            v-for="paper in relatedPapers"
+            :key="paper.id"
+            :paper="paper"
+            :showStatus="true"
+          />
+        </div>
       </div>
     </div>
     <app-footer />
@@ -219,10 +235,10 @@ export default {
     return {
       isDeletingPaper: false,
       isUpdatingStatus: false,
-      isGettingRelatedPapers: false,
+      isGettingRelatedPapers: true,
       errorMessage: "",
       showEditForm: false,
-      relatedPapers: null,
+      relatedPapers: [],
     };
   },
   computed: {
@@ -264,7 +280,7 @@ export default {
     },
   },
   mounted() {
-    //this.searchRelatedPapers();
+    this.searchRelatedPapers();
   },
   methods: {
     formatDate(date) {
@@ -320,9 +336,18 @@ export default {
     async searchRelatedPapers() {
       this.isGettingRelatedPapers = true;
       try {
-        const response = await this.$api.searchRelatedPaper(this.paper.id);
+        const response = await this.$api.searchPaper(
+          this.paper.authors,
+          "approved",
+          "author"
+        );
+        const response2 = await this.$api.searchPaper(
+          this.paper.keywords,
+          "approved",
+          "keywords"
+        );
         if (response.data["is-success"])
-          this.userPapers = response.data["user-papers"];
+          this.relatedPapers = response.data["user-papers"];
         else this.errorMessage = response.data.message;
       } catch (error) {
         this.errorMessage = "Unable to retrieve list of related papers.";
