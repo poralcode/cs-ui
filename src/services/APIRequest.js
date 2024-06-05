@@ -1,6 +1,7 @@
 import axios from "axios";
 
 /* Use this endpoint to sign in the student or faculty member. This will return the user's profile. */
+//const POST_SIGNIN = "https://c861af947d0340e7af544477a9719f6c.api.mockbin.io/";
 const POST_SIGNIN = "https://7f0637a9f7694fb3a2633b43a3a8303d.api.mockbin.io/"; //Mockup data for Student type: "https://c861af947d0340e7af544477a9719f6c.api.mockbin.io/";
 
 /* Use this endpoint to register a new student or faculty member. This will return the user's profile. */
@@ -28,18 +29,22 @@ const GET_STUDENT_PAPERS =
   "https://033f49b0d00f4e9a9bc0fb06776c88d8.api.mockbin.io/";
 
 /* Use this endpoint to fetch all papers depending on their status (Pending, Approved, or Declined). */
-const GET_PAPERS = "https://e1b93d99ad2949dcaa9151f310e91d9f.api.mockbin.io/";
+const GET_PAPERS = "https://033f49b0d00f4e9a9bc0fb06776c88d8.api.mockbin.io/";
 
 /* Use this endpoint to search papers. */
-const SEARCH_PAPERS =
+const SEARCH_PAPERS_BY_TITLE =
+  "https://e1b93d99ad2949dcaa9151f310e91d9f.api.mockbin.io/";
+const SEARCH_PAPERS_BY_AUTHOR =
+  "https://e1b93d99ad2949dcaa9151f310e91d9f.api.mockbin.io/";
+const SEARCH_PAPERS_BY_KEYWORDS =
   "https://e1b93d99ad2949dcaa9151f310e91d9f.api.mockbin.io/";
 
 export default {
   /* Use this function to sign in the student or faculty member. This will return the user's profile.
    * Used on `sign in` page.
    */
-  signIn: (username, password) =>
-    axios.post(`${POST_SIGNIN}`, { username, password }),
+  signIn: (usertype, username, password) =>
+    axios.post(`${POST_SIGNIN}`, { usertype, username, password }),
 
   /* Use this function to register a new student or faculty member. This will return the user's profile.
    * Used on `register` page to register student or faculty.
@@ -88,12 +93,20 @@ export default {
   /* Use this function to search papers.
    * Used on `browse` page to search for papers.
    */
-  searchPaper: (query, status, filter) =>
-    axios.get(`${SEARCH_PAPERS}`, {
-      query, //string.
-      status, //approved, pending, or declined.
-      filter, //ignore the filter for now.
-    }),
+  searchPaper: (query, status, filter) => {
+    const urls = {
+      title: `${SEARCH_PAPERS_BY_TITLE}`,
+      author: `${SEARCH_PAPERS_BY_AUTHOR}`,
+      keywords: `${SEARCH_PAPERS_BY_KEYWORDS}`,
+    };
+    const url = urls[filter];
+    return axios.get(url, {
+      params: {
+        query, //string to search.
+        status, //approved, pending, or declined. Note that this is required.In `browse` page, we only want to search for `approved` papers.
+      },
+    });
+  },
 
   /* Use this function to delete a paper.
    * Used on `paper` page to delete paper.
